@@ -8,7 +8,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
         body {
-            background: linear-gradient(to right, #003366, #006699);
+            background: linear-gradient(to right, #d3d3d3, #a9a9a9);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -27,7 +27,7 @@
         .button {
             font-size: 24px;
             padding: 15px 30px;
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            background: linear-gradient(to right, #003366, #006699);
             color: #ffffff;
             border: none;
             border-radius: 25px;
@@ -36,7 +36,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         .button:hover {
-            background: linear-gradient(to right, #feb47b, #ff7e5f);
+            background: linear-gradient(to right, #006699, #003366);
             transform: translateY(-5px);
         }
         .button:active {
