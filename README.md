@@ -3,50 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INTERSTORM</title>
+    <title>Interstorm</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
-        body {
-            background: linear-gradient(to right, #d3d3d3, #a9a9a9);
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+        .container {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            font-family: 'Montserrat', sans-serif;
-            color: #ffffff;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
         .logo {
-            max-width: 300px;
-            margin-bottom: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px; /* Adjust as needed */
         }
-        .button {
-            font-size: 24px;
+        .content {
+            z-index: 1;
+            padding: 20px;
+        }
+        .content h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .content button {
             padding: 15px 30px;
-            background: linear-gradient(to right, #003366, #006699);
-            color: #ffffff;
+            font-size: 1em;
+            color: #000;
+            background-color: #fff;
             border: none;
-            border-radius: 25px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
         }
-        .button:hover {
-            background: linear-gradient(to right, #006699, #003366);
-            transform: translateY(-5px);
+        .content button:hover {
+            background-color: #ddd;
         }
-        .button:active {
-            transform: translateY(0);
+        .background-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: contain;
+            z-index: 0;
+            opacity: 0.6;
+        }
+        @media (max-width: 768px) {
+            .content h1 {
+                font-size: 1.5em;
+            }
+            .content button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+            .logo {
+                width: 80px; /* Adjust as needed */
+            }
+            .background-image {
+                width: 100%;
+                height: auto;
+            }
         }
     </style>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <img src="logo.png" alt="Interstorm Logo" class="logo">
-    <button class="button" onclick="window.location.href='https://interstorm.ru'">Перейти на главную страницу INTERSTORM</button>
+    <div class="container">
+        <img src="logo.png" alt="Logo" class="logo">
+        <div class="content">
+            <h1>Помогаем производственным предприятиям зарабатывать больше</h1>
+            <button onclick="window.location.href='https://interstorm.ru'">Перейти на главную страницу</button>
+        </div>
+        <img src="image.webp" alt="Background" class="background-image">
+    </div>
 </body>
 </html>
