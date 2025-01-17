@@ -29,6 +29,7 @@
             font-size: 4em;
             color: #3137fd;
             margin-bottom: 20px;
+            font-weight: 700; /* Make the text bolder */
         }
         .content {
             z-index: 1;
@@ -47,6 +48,7 @@
             border-radius: 5px;
             cursor: pointer;
             margin-top: 20px;
+            font-family: 'Montserrat', sans-serif; /* Ensure the button text uses Montserrat */
         }
         .content button:hover {
             background-color: #262cd5;
