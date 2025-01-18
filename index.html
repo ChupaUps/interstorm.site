@@ -82,24 +82,12 @@
             opacity: 0;
             transition: opacity 5s;
         }
-        .lightning {
-            position: absolute;
-            width: 2px;
-            height: 100%;
-            background: #3137fd;
-            opacity: 0;
-            animation: lightning 0.1s ease-in-out infinite;
-        }
         @keyframes typing {
             from { width: 0; }
             to { width: 100%; }
         }
         @keyframes blink {
             to { border-color: transparent; }
-        }
-        @keyframes lightning {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
         }
         @media (max-width: 768px) {
             .header {
@@ -117,50 +105,73 @@
 </head>
 <body>
     <div class="container">
-        <div class="header" onclick="window.location.href='https://interstorm.ru'">INTERSTORM</div>
+        <div class="header" id="header">INTERSTORM</div>
         <div class="content">
             <h1>Помогаем производственным предприятиям зарабатывать больше</h1>
             <button onclick="window.location.href='https://interstorm.ru'">Перейти на главную страницу</button>
         </div>
         <img src="image.webp" alt="Background" class="background-image">
         <div class="overlay" id="overlay"></div>
+        <canvas id="lightningCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2;"></canvas>
     </div>
     <script>
         const overlay = document.getElementById('overlay');
-        const header = document.querySelector('.header');
+        const header = document.getElementById('header');
         const container = document.querySelector('.container');
+        const canvas = document.getElementById('lightningCanvas');
+        const ctx = canvas.getContext('2d');
 
-        function startAnimationCycle() {
-            overlay.style.opacity = 1;
-            setTimeout(() => {
-                header.style.color = '#ffa500'; // Неоново-оранжевый цвет
-                createLightning();
-                setTimeout(() => {
-                    header.style.color = '#3137fd'; // Возвращаем фирменный цвет
-                    removeLightning();
-                    overlay.style.opacity = 0;
-                }, 5000);
-            }, 5000);
-        }
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-        function createLightning() {
-            for (let i = 0; i < 10; i++) {
-                const lightning = document.createElement('div');
-                lightning.className = 'lightning';
-                lightning.style.left = Math.random() * 100 + 'vw';
-                lightning.style.top = Math.random() * 100 + 'vh';
-                lightning.style.transform = `rotate(${Math.random() * 360}deg)`;
-                lightning.style.animationDelay = `${Math.random() * 5}s`;
-                container.appendChild(lightning);
+        header.addEventListener('click', () => {
+            window.location.href = 'https://interstorm.ru';
+        });
+
+        function drawLightning(x, y) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            let length = Math.random() * 100 + 50;
+            let angle = Math.random() * Math.PI * 2;
+            let endX = x + length * Math.cos(angle);
+            let endY = y + length * Math.sin(angle);
+            ctx.lineTo(endX, endY);
+            ctx.strokeStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            ctx.lineWidth = Math.random() * 5 + 2;
+            ctx.stroke();
+
+            if (Math.random() > 0.7) {
+                drawLightning(endX, endY);
             }
         }
 
-        function removeLightning() {
-            const lightnings = document.querySelectorAll('.lightning');
-            lightnings.forEach(lightning => container.removeChild(lightning));
+        function createLightning() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < 5; i++) {
+                drawLightning(Math.random() * canvas.width, Math.random() * canvas.height);
+            }
         }
 
-        setInterval(startAnimationCycle, 20000);
+        function startAnimationCycle() {
+            overlay.style.opacity = 1;
+            header.style.color = '#ffff00'; // Очень яркий цвет
+            createLightning();
+            setTimeout(() => {
+                header.style.color = '#3137fd'; // Возвращаем фирменный цвет
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                overlay.style.opacity = 0;
+            }, 5000);
+        }
+
+        setTimeout(() => {
+            startAnimationCycle();
+            setInterval(startAnimationCycle, 20000);
+        }, 7000);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
     </script>
 </body>
 </html>
