@@ -89,6 +89,17 @@
         @keyframes blink {
             to { border-color: transparent; }
         }
+        @keyframes neon {
+            0%, 100% {
+                text-shadow: 0 0 5px #ff4500, 0 0 10px #ff4500, 0 0 20px #ff4500, 0 0 40px #ff8c00, 0 0 80px #ff8c00, 0 0 90px #ff8c00, 0 0 100px #ff8c00;
+            }
+            50% {
+                text-shadow: 0 0 10px #ff4500, 0 0 20px #ff4500, 0 0 30px #ff4500, 0 0 50px #ff8c00, 0 0 90px #ff8c00, 0 0 110px #ff8c00, 0 0 130px #ff8c00;
+            }
+        }
+        .neon-text {
+            animation: neon 1.5s ease-in-out infinite alternate;
+        }
         @media (max-width: 768px) {
             .header {
                 font-size: 3em;
@@ -128,35 +139,41 @@
             window.location.href = 'https://interstorm.ru';
         });
 
-        function drawLightning(x, y) {
+        function drawLightning(x, y, length, angle, depth) {
+            if (depth === 0) return;
             ctx.beginPath();
             ctx.moveTo(x, y);
-            let length = Math.random() * 100 + 50;
-            let angle = Math.random() * Math.PI * 2;
             let endX = x + length * Math.cos(angle);
             let endY = y + length * Math.sin(angle);
             ctx.lineTo(endX, endY);
-            ctx.strokeStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
-            ctx.lineWidth = Math.random() * 5 + 2;
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = Math.random() * 3 + 1;
             ctx.stroke();
 
-            if (Math.random() > 0.7) {
-                drawLightning(endX, endY);
-            }
+            let branchAngle = Math.PI / 6;
+            let branchLength = length * (Math.random() * 0.5 + 0.5);
+            drawLightning(endX, endY, branchLength, angle - branchAngle, depth - 1);
+            drawLightning(endX, endY, branchLength, angle + branchAngle, depth - 1);
         }
 
         function createLightning() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < 5; i++) {
-                drawLightning(Math.random() * canvas.width, Math.random() * canvas.height);
+            for (let i = 0; i < 3; i++) {
+                let x = Math.random() * canvas.width;
+                let y = Math.random() * canvas.height / 2;
+                let length = Math.random() * 200 + 100;
+                let angle = Math.PI / 2;
+                drawLightning(x, y, length, angle, 5);
             }
         }
 
         function startAnimationCycle() {
             overlay.style.opacity = 1;
-            header.style.color = '#ffff00'; // Очень яркий цвет
+            header.classList.add('neon-text');
+            header.style.color = '#ff4500'; // Ярко оранжевый цвет
             createLightning();
             setTimeout(() => {
+                header.classList.remove('neon-text');
                 header.style.color = '#3137fd'; // Возвращаем фирменный цвет
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 overlay.style.opacity = 0;
