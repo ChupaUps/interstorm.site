@@ -141,7 +141,7 @@
             window.location.href = 'https://interstorm.ru';
         });
 
-        function drawLightning(x, y, length, angle, depth) {
+        function drawLightning(x, y, length, angle, depth, colorStop1, colorStop2) {
             if (depth === 0) return;
             ctx.beginPath();
             ctx.moveTo(x, y);
@@ -151,9 +151,8 @@
 
             // Градиентная окраска молнии
             let gradient = ctx.createLinearGradient(x, y, endX, endY);
-            gradient.addColorStop(0, '#00ffff'); // Неоново-синий
-            gradient.addColorStop(0.5, '#ffffff'); // Белый
-            gradient.addColorStop(1, '#800080'); // Фиолетовый
+            gradient.addColorStop(0, colorStop1);
+            gradient.addColorStop(1, colorStop2);
             ctx.strokeStyle = gradient;
 
             ctx.lineWidth = Math.random() * 3 + 1;
@@ -161,8 +160,8 @@
 
             let branchAngle = Math.PI / 6;
             let branchLength = length * (Math.random() * 0.5 + 0.5);
-            drawLightning(endX, endY, branchLength, angle - branchAngle, depth - 1);
-            drawLightning(endX, endY, branchLength, angle + branchAngle, depth - 1);
+            drawLightning(endX, endY, branchLength, angle - branchAngle, depth - 1, colorStop1, colorStop2);
+            drawLightning(endX, endY, branchLength, angle + branchAngle, depth - 1, colorStop1, colorStop2);
         }
 
         function createLightning() {
@@ -172,7 +171,9 @@
                 let y = Math.random() * canvas.height / 2;
                 let length = Math.random() * 200 + 100;
                 let angle = Math.PI / 2;
-                drawLightning(x, y, length, angle, 5);
+                let colorStop1 = '#00ffff'; // Неоново-синий
+                let colorStop2 = '#800080'; // Фиолетовый
+                drawLightning(x, y, length, angle, 5, colorStop1, colorStop2);
             }
         }
 
