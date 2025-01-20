@@ -114,6 +114,17 @@
                 font-size: 0.9em;
             }
         }
+        .glow {
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            0% {
+                filter: drop-shadow(0 0 5px #00ffff) drop-shadow(0 0 10px #00ffff) drop-shadow(0 0 20px #00ffff);
+            }
+            100% {
+                filter: drop-shadow(0 0 15px #00ffff) drop-shadow(0 0 30px #00ffff) drop-shadow(0 0 60px #00ffff);
+            }
+        }
     </style>
 </head>
 <body>
@@ -175,6 +186,10 @@
                 let colorStop2 = '#00ffff'; // Неоново-синий
                 drawLightning(x, y, length, angle, 5, colorStop1, colorStop2);
             }
+            canvas.classList.add('glow');
+            setTimeout(() => {
+                canvas.classList.remove('glow');
+            }, 1000);
         }
 
         function startAnimationCycle() {
