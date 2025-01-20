@@ -99,6 +99,8 @@
         }
         .neon-text {
             animation: neon 1.5s ease-in-out infinite alternate;
+            color: #ff4500;
+            text-shadow: 0 0 5px #ff4500, 0 0 10px #ff4500, 0 0 20px #ff4500, 0 0 40px #ff8c00, 0 0 80px #ff8c00, 0 0 90px #ff8c00, 0 0 100px #ff8c00;
         }
         @media (max-width: 768px) {
             .header {
@@ -146,7 +148,7 @@
             let endX = x + length * Math.cos(angle);
             let endY = y + length * Math.sin(angle);
             ctx.lineTo(endX, endY);
-            ctx.strokeStyle = 'white';
+            ctx.strokeStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
             ctx.lineWidth = Math.random() * 3 + 1;
             ctx.stroke();
 
@@ -158,7 +160,7 @@
 
         function createLightning() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < 3; i++) {
+            for (let i = 0; i < 5; i++) {
                 let x = Math.random() * canvas.width;
                 let y = Math.random() * canvas.height / 2;
                 let length = Math.random() * 200 + 100;
@@ -170,11 +172,9 @@
         function startAnimationCycle() {
             overlay.style.opacity = 1;
             header.classList.add('neon-text');
-            header.style.color = '#ff4500'; // Ярко оранжевый цвет
             createLightning();
             setTimeout(() => {
                 header.classList.remove('neon-text');
-                header.style.color = '#3137fd'; // Возвращаем фирменный цвет
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 overlay.style.opacity = 0;
             }, 5000);
