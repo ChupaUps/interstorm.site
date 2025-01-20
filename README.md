@@ -171,8 +171,8 @@
                 let y = Math.random() * canvas.height / 2;
                 let length = Math.random() * 200 + 100;
                 let angle = Math.PI / 2;
-                let colorStop1 = '#00ffff'; // Неоново-синий
-                let colorStop2 = '#800080'; // Фиолетовый
+                let colorStop1 = '#ffffff'; // Белый
+                let colorStop2 = '#00ffff'; // Неоново-синий
                 drawLightning(x, y, length, angle, 5, colorStop1, colorStop2);
             }
         }
@@ -188,9 +188,18 @@
             }, 5000);
         }
 
+        function playThunderSound() {
+            let audio = new Audio('thunder.mp3');
+            audio.play();
+        }
+
         setTimeout(() => {
             startAnimationCycle();
-            setInterval(startAnimationCycle, 20000);
+            playThunderSound();
+            setInterval(() => {
+                startAnimationCycle();
+                playThunderSound();
+            }, 20000);
         }, 7000);
 
         window.addEventListener('resize', () => {
