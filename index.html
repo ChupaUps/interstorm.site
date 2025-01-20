@@ -91,16 +91,16 @@
         }
         @keyframes neon {
             0%, 100% {
-                text-shadow: 0 0 5px #ff4500, 0 0 10px #ff4500, 0 0 20px #ff4500, 0 0 40px #ff8c00, 0 0 80px #ff8c00, 0 0 90px #ff8c00, 0 0 100px #ff8c00;
+                text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 80px #00ffff, 0 0 90px #00ffff, 0 0 100px #00ffff;
             }
             50% {
-                text-shadow: 0 0 10px #ff4500, 0 0 20px #ff4500, 0 0 30px #ff4500, 0 0 50px #ff8c00, 0 0 90px #ff8c00, 0 0 110px #ff8c00, 0 0 130px #ff8c00;
+                text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 50px #00ffff, 0 0 90px #00ffff, 0 0 110px #00ffff, 0 0 130px #00ffff;
             }
         }
         .neon-text {
             animation: neon 1.5s ease-in-out infinite alternate;
-            color: #ff4500;
-            text-shadow: 0 0 5px #ff4500, 0 0 10px #ff4500, 0 0 20px #ff4500, 0 0 40px #ff8c00, 0 0 80px #ff8c00, 0 0 90px #ff8c00, 0 0 100px #ff8c00;
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 80px #00ffff, 0 0 90px #00ffff, 0 0 100px #00ffff;
         }
         @media (max-width: 768px) {
             .header {
@@ -148,7 +148,14 @@
             let endX = x + length * Math.cos(angle);
             let endY = y + length * Math.sin(angle);
             ctx.lineTo(endX, endY);
-            ctx.strokeStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
+
+            // Градиентная окраска молнии
+            let gradient = ctx.createLinearGradient(x, y, endX, endY);
+            gradient.addColorStop(0, '#00ffff'); // Неоново-синий
+            gradient.addColorStop(0.5, '#ffffff'); // Белый
+            gradient.addColorStop(1, '#800080'); // Фиолетовый
+            ctx.strokeStyle = gradient;
+
             ctx.lineWidth = Math.random() * 3 + 1;
             ctx.stroke();
 
