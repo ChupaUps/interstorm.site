@@ -141,24 +141,36 @@
     <script>
         const overlay = document.getElementById('overlay');
         const header = document.getElementById('header');
-        const container = document.querySelector('.container');
         const canvas = document.getElementById('lightningCanvas');
         const ctx = canvas.getContext('2d');
 
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
+        // Кликабельность заголовка
         header.addEventListener('click', () => {
             window.location.href = 'https://interstorm.ru';
         });
 
+        // Функция для рисования молнии
         function drawLightning(x, y, length, angle, depth, colorStop1, colorStop2) {
             if (depth === 0) return;
+
             ctx.beginPath();
             ctx.moveTo(x, y);
+
+            // Конечная точка основной ветви
             let endX = x + length * Math.cos(angle);
             let endY = y + length * Math.sin(angle);
-            ctx.lineTo(endX, endY);
+
+            // Создаем изгибы с помощью кривой Безье
+            let controlX1 = x + (length / 3) * Math.cos(angle) + (Math.random() - 0.5) * length * 0.3;
+            let controlY1 = y + (length / 3) * Math.sin(angle) + (Math.random() - 0.5) * length * 0.3;
+            let controlX2 = x + (2 * length / 3) * Math.cos(angle) + (Math.random() - 0.5) * length * 0.3;
+            let controlY2 = y + (2 * length / 3) * Math.sin(angle) + (Math.random() - 0.5) * length * 0.3;
+
+            // Рисуем кривую Безье
+            ctx.bezierCurveTo(controlX1, controlY1, controlX2, controlY2, endX, endY);
 
             // Градиентная окраска молнии
             let gradient = ctx.createLinearGradient(x, y, endX, endY);
@@ -169,19 +181,25 @@
             ctx.lineWidth = Math.random() * 3 + 1;
             ctx.stroke();
 
-            let branchAngle = Math.PI / 6;
-            let branchLength = length * (Math.random() * 0.5 + 0.5);
-            drawLightning(endX, endY, branchLength, angle - branchAngle, depth - 1, colorStop1, colorStop2);
-            drawLightning(endX, endY, branchLength, angle + branchAngle, depth - 1, colorStop1, colorStop2);
+            // Рекурсивно рисуем ветви
+            if (depth > 1) {
+                let branchCount = Math.floor(Math.random() * 3) + 1; // Количество ветвей
+                for (let i = 0; i < branchCount; i++) {
+                    let branchAngle = angle + (Math.random() - 0.5) * Math.PI / 4; // Угол ветви
+                    let branchLength = length * (Math.random() * 0.5 + 0.3); // Длина ветви
+                    drawLightning(endX, endY, branchLength, branchAngle, depth - 1, colorStop1, colorStop2);
+                }
+            }
         }
 
+        // Функция для создания молний
         function createLightning() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 3; i++) {
                 let x = Math.random() * canvas.width;
                 let y = Math.random() * canvas.height / 2;
                 let length = Math.random() * 200 + 100;
-                let angle = Math.PI / 2;
+                let angle = Math.PI / 2 + (Math.random() - 0.5) * Math.PI / 8;
                 let colorStop1 = '#ffffff'; // Белый
                 let colorStop2 = '#00ffff'; // Неоново-синий
                 drawLightning(x, y, length, angle, 5, colorStop1, colorStop2);
@@ -192,6 +210,7 @@
             }, 1000);
         }
 
+        // Функция для запуска анимации
         function startAnimationCycle() {
             overlay.style.opacity = 1;
             header.classList.add('neon-text');
@@ -203,11 +222,13 @@
             }, 5000);
         }
 
+        // Функция для воспроизведения звука грома
         function playThunderSound() {
             let audio = new Audio('thunder.mp3');
             audio.play();
         }
 
+        // Запуск анимации через 7 секунд и повтор каждые 20 секунд
         setTimeout(() => {
             startAnimationCycle();
             playThunderSound();
@@ -217,6 +238,7 @@
             }, 20000);
         }, 7000);
 
+        // Обработка изменения размера окна
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
