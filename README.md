@@ -148,7 +148,7 @@
         <div class="header" id="header">INTERSTORM</div>
         <div class="content">
             <h1>Помогаем производственным предприятиям зарабатывать больше</h1>
-            <button onclick="window.location.href='https://interstorm.ru'">Перейти на главную страницу</button>
+            <button id="mainButton">Перейти на главную страницу</button>
         </div>
         <img src="image.webp" alt="Background" class="background-image">
         <div class="overlay" id="overlay"></div>
@@ -159,12 +159,18 @@
         const header = document.getElementById('header');
         const canvas = document.getElementById('lightningCanvas');
         const ctx = canvas.getContext('2d');
+        const mainButton = document.getElementById('mainButton');
 
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
         // Кликабельность заголовка
         header.addEventListener('click', () => {
+            window.location.href = 'https://interstorm.ru';
+        });
+
+        // Переход на сайт при нажатии на кнопку
+        mainButton.addEventListener('click', () => {
             window.location.href = 'https://interstorm.ru';
         });
 
