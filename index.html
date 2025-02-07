@@ -48,9 +48,10 @@
             font-weight: 700;
             cursor: pointer;
             transition: color 0.5s;
+            z-index: 3; /* Убедитесь, что заголовок имеет более высокий z-index */
         }
         .content {
-            z-index: 1;
+            z-index: 3; /* Убедитесь, что контент имеет более высокий z-index */
             padding: 20px;
         }
         .content h1 {
@@ -72,6 +73,7 @@
             cursor: pointer;
             margin-top: 20px;
             font-family: 'Montserrat', sans-serif;
+            z-index: 3; /* Убедитесь, что кнопка имеет более высокий z-index */
         }
         .content button:hover {
             background-color: #262cd5;
@@ -97,6 +99,7 @@
             z-index: 1;
             opacity: 0;
             transition: opacity 5s;
+            pointer-events: none; /* Убедитесь, что overlay не блокирует клики */
         }
         @keyframes typing {
             from { width: 0; }
