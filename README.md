@@ -150,7 +150,8 @@
     <div class="container">
         <div class="header" id="header">INTERSTORM</div>
         <div class="content">
-            <h1>Помогаем производственным предприятиям зарабатывать больше</h1>
+            <h1>ИНТЕРШТОРМ Мир меняет не ИИ, а люди.</h1>
+           <h2>Выстраиваем операционную эффективность в мире, где единственная константа – это изменения.</h2>
             <button id="mainButton">Перейти на главную страницу</button>
         </div>
         <img src="image.webp" alt="Background" class="background-image">
