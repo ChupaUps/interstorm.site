@@ -21,140 +21,253 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interstorm</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             font-family: 'Montserrat', sans-serif;
             overflow: hidden;
+            background-color: #000;
+            color: #fff;
         }
+        
         .container {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #000;
-            color: #fff;
-            text-align: center;
+            min-height: 100vh;
+            padding: 20px;
             position: relative;
+            text-align: center;
+            z-index: 3;
         }
+        
         .header {
-            font-size: 4em;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
             color: #3137fd;
-            margin-bottom: 20px;
+            margin-bottom: clamp(15px, 3vw, 30px);
             font-weight: 700;
             cursor: pointer;
             transition: color 0.5s;
-            z-index: 3; /* Убедитесь, что заголовок имеет более высокий z-index */
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            z-index: 3;
+            text-shadow: 0 0 10px rgba(49, 55, 253, 0.7);
         }
+        
         .content {
-            z-index: 3; /* Убедитесь, что контент имеет более высокий z-index */
-            padding: 20px;
+            z-index: 3;
+            padding: clamp(15px, 4vw, 30px);
+            max-width: 95%;
+            width: 100%;
         }
+        
         .content h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
+            font-size: clamp(1.75rem, 5vw, 2.5rem);
+            margin-bottom: clamp(15px, 2.5vw, 25px);
             display: inline-block;
             border-right: 2px solid #3137fd;
             white-space: nowrap;
             overflow: hidden;
-            animation: typing 2s steps(30, end), blink 0.5s step-end infinite alternate;
+            animation: typing 2.5s steps(45, end), blink 0.5s step-end infinite alternate;
+            line-height: 1.3;
+            max-width: 100%;
         }
+        
+        .content h2 {
+            font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+            margin: clamp(10px, 2vw, 20px) 0 clamp(20px, 3vw, 30px);
+            font-weight: 400;
+            line-height: 1.5;
+            opacity: 0.95;
+            max-width: 100%;
+            padding: 0 5px;
+        }
+        
         .content button {
-            padding: 15px 30px;
-            font-size: 1em;
+            padding: clamp(12px, 2.5vw, 18px) clamp(25px, 5vw, 40px);
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
             color: #fff;
-            background-color: #3137fd;
+            background: linear-gradient(120deg, #3137fd, #5a5fff);
             border: none;
-            border-radius: 5px;
+            border-radius: 50px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: clamp(15px, 3vw, 25px);
             font-family: 'Montserrat', sans-serif;
-            z-index: 3; /* Убедитесь, что кнопка имеет более высокий z-index */
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(49, 55, 253, 0.4);
+            z-index: 3;
+            max-width: 95%;
+            width: auto;
         }
+        
         .content button:hover {
-            background-color: #262cd5;
+            background: linear-gradient(120deg, #262cd5, #4a4fe5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(49, 55, 253, 0.6);
         }
+        
+        .content button:active {
+            transform: translateY(1px);
+        }
+        
         .background-image {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 100%;
-            height: auto;
+            width: 120%;
+            height: 120%;
             transform: translate(-50%, -50%);
-            object-fit: contain;
+            object-fit: cover;
             z-index: 0;
-            opacity: 0.6;
+            opacity: 0.15;
+            filter: blur(2px);
         }
+        
         .overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.85);
             z-index: 1;
             opacity: 0;
             transition: opacity 5s;
-            pointer-events: none; /* Убедитесь, что overlay не блокирует клики */
+            pointer-events: none;
         }
+        
         @keyframes typing {
             from { width: 0; }
             to { width: 100%; }
         }
+        
         @keyframes blink {
             to { border-color: transparent; }
         }
+        
         @keyframes neon {
             0%, 100% {
-                text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 80px #00ffff, 0 0 90px #00ffff, 0 0 100px #00ffff;
+                text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
             }
             50% {
-                text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 50px #00ffff, 0 0 90px #00ffff, 0 0 110px #00ffff, 0 0 130px #00ffff;
+                text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 50px #00ffff;
             }
         }
+        
         .neon-text {
             animation: neon 1.5s ease-in-out infinite alternate;
             color: #00ffff;
-            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 80px #00ffff, 0 0 90px #00ffff, 0 0 100px #00ffff;
+            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
         }
-        @media (max-width: 768px) {
-            .header {
-                font-size: 3em;
+        
+        @keyframes glow {
+            0% {
+                filter: drop-shadow(0 0 5px #00ffff) drop-shadow(0 0 10px #00ffff);
             }
-            .content h1 {
-                font-size: 1.5em;
-            }
-            .content button {
-                padding: 10px 20px;
-                font-size: 0.9em;
+            100% {
+                filter: drop-shadow(0 0 10px #00ffff) drop-shadow(0 0 25px #00ffff);
             }
         }
+        
         .glow {
             animation: glow 1s ease-in-out infinite alternate;
         }
-        @keyframes glow {
-            0% {
-                filter: drop-shadow(0 0 5px #00ffff) drop-shadow(0 0 10px #00ffff) drop-shadow(0 0 20px #00ffff);
+        
+        /* Адаптация для мобильных устройств */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
             }
-            100% {
-                filter: drop-shadow(0 0 15px #00ffff) drop-shadow(0 0 30px #00ffff) drop-shadow(0 0 60px #00ffff);
+            
+            .header {
+                margin-bottom: 15px;
             }
+            
+            .content h1 {
+                margin-bottom: 15px;
+                animation-duration: 3s;
+            }
+            
+            .content h2 {
+                margin: 10px 0 20px;
+            }
+            
+            .content button {
+                margin-top: 20px;
+                padding: 12px 25px;
+            }
+        }
+        
+        /* Адаптация для очень маленьких экранов */
+        @media (max-width: 480px) {
+            .header {
+                white-space: normal;
+                word-break: break-word;
+                line-height: 1.2;
+            }
+            
+            .content h1 {
+                white-space: normal;
+                border-right: none;
+                width: 100%;
+                text-align: center;
+                padding: 0 5px;
+            }
+            
+            .content h2 {
+                font-size: clamp(1rem, 4vw, 1.3rem);
+            }
+            
+            .content button {
+                width: 100%;
+                max-width: 400px;
+                padding: 14px;
+            }
+        }
+        
+        /* Адаптация для больших экранов */
+        @media (min-width: 1440px) {
+            .container {
+                padding: 30px;
+            }
+            
+            .content {
+                max-width: 800px;
+            }
+        }
+        
+        /* Анимация появления контента */
+        .fade-in {
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header" id="header">INTERSTORM</div>
-        <div class="content">
+        <div class="header fade-in" id="header" style="animation-delay: 0.3s">INTERSTORM</div>
+        <div class="content fade-in" style="animation-delay: 0.6s">
             <h1>ИНТЕРШТОРМ Мир меняет не ИИ, а люди.</h1>
-           <h2>Выстраиваем операционную эффективность в мире, где единственная константа – это изменения.</h2>
+            <h2>Выстраиваем операционную эффективность в мире, где единственная константа – это изменения.</h2>
             <button id="mainButton">Перейти на главную страницу</button>
         </div>
-        <img src="image.webp" alt="Background" class="background-image">
+        <img src="https://images.unsplash.com/photo-1550751863-8843f969c258?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Background" class="background-image">
         <div class="overlay" id="overlay"></div>
         <canvas id="lightningCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2;"></canvas>
     </div>
@@ -165,10 +278,16 @@
             const canvas = document.getElementById('lightningCanvas');
             const ctx = canvas.getContext('2d');
             const mainButton = document.getElementById('mainButton');
+            const content = document.querySelector('.content');
 
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
+            // Установка размеров холста
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            resizeCanvas();
+            
             // Кликабельность заголовка
             header.addEventListener('click', () => {
                 window.location.href = 'https://interstorm.ru';
@@ -222,15 +341,27 @@
             // Функция для создания молний
             function createLightning() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for (let i = 0; i < 3; i++) {
+                
+                // Рисуем 1-3 молнии в зависимости от размера экрана
+                const lightningCount = window.innerWidth < 768 ? 1 : Math.floor(Math.random() * 2) + 1;
+                
+                for (let i = 0; i < lightningCount; i++) {
+                    // Позиционируем молнии в верхней части экрана
                     let x = Math.random() * canvas.width;
-                    let y = Math.random() * canvas.height / 2;
-                    let length = Math.random() * 200 + 100;
+                    let y = Math.random() * (canvas.height / 3);
+                    let length = Math.random() * 150 + 100;
+                    
+                    // На мобильных устройствах делаем молнии короче
+                    if (window.innerWidth < 768) {
+                        length = Math.random() * 100 + 70;
+                    }
+                    
                     let angle = Math.PI / 2 + (Math.random() - 0.5) * Math.PI / 8;
                     let colorStop1 = '#ffffff'; // Белый
                     let colorStop2 = '#00ffff'; // Неоново-синий
-                    drawLightning(x, y, length, angle, 5, colorStop1, colorStop2);
+                    drawLightning(x, y, length, angle, 4, colorStop1, colorStop2);
                 }
+                
                 canvas.classList.add('glow');
                 setTimeout(() => {
                     canvas.classList.remove('glow');
@@ -249,13 +380,13 @@
                 }, 5000);
             }
 
-            // Функция для воспроизведения звука грома
+            // Функция для воспроизведения звука грома (заглушка)
             function playThunderSound() {
-                let audio = new Audio('thunder.mp3');
-                audio.play();
+                // В реальном проекте здесь будет воспроизведение звука
+                console.log("Thunder sound would play here");
             }
 
-            // Запуск анимации через 7 секунд и повтор каждые 20 секунд
+            // Запуск анимации через 5 секунд и повтор каждые 20 секунд
             setTimeout(() => {
                 startAnimationCycle();
                 playThunderSound();
@@ -263,13 +394,28 @@
                     startAnimationCycle();
                     playThunderSound();
                 }, 20000);
-            }, 7000);
+            }, 5000);
 
             // Обработка изменения размера окна
             window.addEventListener('resize', () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+                resizeCanvas();
+                
+                // На мобильных устройствах убираем анимацию набора текста для лучшей производительности
+                if (window.innerWidth < 480) {
+                    const h1 = document.querySelector('.content h1');
+                    h1.style.animation = 'none';
+                    h1.style.whiteSpace = 'normal';
+                    h1.style.borderRight = 'none';
+                    h1.style.width = 'auto';
+                }
             });
+            
+            // Добавляем плавное появление контента
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    el.style.opacity = 1;
+                });
+            }, 300);
         });
     </script>
 </body>
